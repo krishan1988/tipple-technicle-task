@@ -17,7 +17,7 @@ namespace api.Connector
         public  Task<DrinkDetails> GetCocktailByID(int id)
         {
 
-            var urlPath = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007";
+            var urlPath = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + id.ToString();
             var  httpResponse =  httpClient.GetAsync(urlPath);
             var dls= httpResponse.Result.Content.ReadAsAsync<DrinkDetails>();
             return dls;

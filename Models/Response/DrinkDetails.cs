@@ -67,7 +67,7 @@ namespace api.Models.Response
 
     public class DrinkDetails
     {
-        public List<DrinkDetail> drinkDetails { get; set; }
+        public List<DrinkDetail> drinks { get; set; }
     }
 
 }
