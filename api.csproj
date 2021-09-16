@@ -8,5 +8,10 @@
       <Folder Include="Models\DTO" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="HttpClientFactory" Version="1.0.3" />
+      <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    </ItemGroup>
+
 
 </Project>

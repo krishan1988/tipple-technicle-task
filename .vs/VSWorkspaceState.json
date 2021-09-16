@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Connector",
+    "\\Controllers",
+    "\\Models",
+    "\\Models\\Response",
+    "\\Properties",
+    "\\Services"
+  ],
+  "SelectedNode": "\\Controllers\\BoozeController.cs",
+  "PreviewInSolutionExplorer": false
+}

@@ -7,7 +7,7 @@ namespace api.Models.Response
         public int Id { get; set; }
         public string Name { get; set; }
         public string Instructions { get; set; }
-        public List<string> Ingredients { get; set; }
+        public List<object> Ingredients { get; set; }
         public string ImageURL { get; set; }
     }
 }
