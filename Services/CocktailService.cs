@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Connector;
+using System.Net.Http;
+using System.Net;
 
 namespace api.Services
 {
@@ -26,64 +28,35 @@ namespace api.Services
         {
             CocktailList cocktailList = new CocktailList();
             cocktailList.Cocktails = new List<Cocktail>();
-            Task<Drinks> drinks = this.connector.GetCocktailIDsByIngredient(ingredient);
+            Drinks drinks = this.connector.GetCocktailIDsByIngredient(ingredient);
+            if (drinks == null) {
+                return null;
+            }
 
-            foreach (var d in drinks.Result.drinks.ToArray()) {
+            foreach (var d in drinks.drinks) {
                 var id = Int32.Parse(d.idDrink);
                 var cocktail = connector.GetCocktailByID(id);
-                if (cocktail.Result.drinks == null){
-                    continue;
-                }
-                foreach (var l in cocktail.Result.drinks.ToArray()) {
+                foreach (var l in cocktail.drinks.ToArray()) {
                     var c = new Cocktail();
                     c.Id = Int32.Parse(l.idDrink);
                     c.Name = l.strDrink ;
                      c.ImageURL = l.strDrinkThumb != null ?  l.strDrinkThumb.ToString(): "";
-                    c.Ingredients = new List<object>();
-                    if( l.strIngredient1 !=null)
-                        c.Ingredients.Add(l.strIngredient1);
 
-                    if (l.strIngredient2 != null)
-                        c.Ingredients.Add(l.strIngredient2);
-
-                    if (l.strIngredient3 != null)
-                        c.Ingredients.Add(l.strIngredient3);
-
-                    if (l.strIngredient4 != null)
-                        c.Ingredients.Add(l.strIngredient4);
-
-                    if (l.strIngredient5 != null)
-                        c.Ingredients.Add(l.strIngredient5);
-                   
-                    if (l.strIngredient6 != null)
-                        c.Ingredients.Add(l.strIngredient6);
-                   
-                    if (l.strIngredient7 != null)
-                        c.Ingredients.Add(l.strIngredient7);
-                  
-                    if (l.strIngredient8 != null)
-                        c.Ingredients.Add(l.strIngredient8);
-                   
-                    if (l.strIngredient9 != null)
-                        c.Ingredients.Add(l.strIngredient9);
-                    
-                    if (l.strIngredient10 != null)
-                        c.Ingredients.Add(l.strIngredient10);
-                   
-                    if (l.strIngredient11 != null)
-                        c.Ingredients.Add(l.strIngredient11);
-              
-                    if (l.strIngredient12 != null)
-                        c.Ingredients.Add(l.strIngredient12);
-                 
-                    if (l.strIngredient13 != null)
-                        c.Ingredients.Add(l.strIngredient13);
-                   
-                    if (l.strIngredient14 != null)
-                        c.Ingredients.Add(l.strIngredient14);
-                  
-                    if (l.strIngredient15 != null)
-                        c.Ingredients.Add(l.strIngredient15);
+                    c.strIngredient1 = l.strIngredient1;
+                    c.strIngredient2 = l.strIngredient2;
+                    c.strIngredient3 = l.strIngredient3;
+                    c.strIngredient4 = l.strIngredient4;
+                    c.strIngredient5 = l.strIngredient5;
+                    c.strIngredient6 = l.strIngredient6;
+                    c.strIngredient7 = l.strIngredient7;
+                    c.strIngredient8 = l.strIngredient8;
+                    c.strIngredient9 = l.strIngredient9;
+                    c.strIngredient10 = l.strIngredient10;
+                    c.strIngredient11 = l.strIngredient11;
+                    c.strIngredient12 = l.strIngredient12;
+                    c.strIngredient13 = l.strIngredient13;
+                    c.strIngredient14 = l.strIngredient14;
+                    c.strIngredient15 = l.strIngredient15;
 
                     c.Instructions = l.strInstructions;
                     cocktailList.Cocktails.Add(c);
@@ -98,62 +71,32 @@ namespace api.Services
             CocktailList cocktailList = new CocktailList();
             cocktailList.Cocktails = new List<Cocktail>();
 
-            foreach (var d in connector.GetRandomCocktail().Result.drinks.ToArray())
+            foreach (var drinkDetails in connector.GetRandomCocktail().drinks.ToArray())
             {
-                var c = new Cocktail();
-                c.Id = Int32.Parse(d.idDrink);
-                c.Name = d.strDrink;
+                var cocktail = new Cocktail();
+                cocktail.Id = Int32.Parse(drinkDetails.idDrink);
+                cocktail.Name = drinkDetails.strDrink;
                 
-                c.ImageURL = d.strDrinkThumb != null ?  d.strDrinkThumb.ToString(): "";
+                cocktail.ImageURL = drinkDetails.strDrinkThumb != null ?  drinkDetails.strDrinkThumb.ToString(): "";
 
-                c.Ingredients = new List<object>();
-                if(d.strIngredient1 != null)
-                c.Ingredients.Add(d.strIngredient1);
+                cocktail.strIngredient1 = drinkDetails.strIngredient1;
+                cocktail.strIngredient2 = drinkDetails.strIngredient2;
+                cocktail.strIngredient3 = drinkDetails.strIngredient3;
+                cocktail.strIngredient4 = drinkDetails.strIngredient4;
+                cocktail.strIngredient5 = drinkDetails.strIngredient5;
+                cocktail.strIngredient6 = drinkDetails.strIngredient6;
+                cocktail.strIngredient7 = drinkDetails.strIngredient7;
+                cocktail.strIngredient8 = drinkDetails.strIngredient8;
+                cocktail.strIngredient9 = drinkDetails.strIngredient9;
+                cocktail.strIngredient10 = drinkDetails.strIngredient10;
+                cocktail.strIngredient11 = drinkDetails.strIngredient11;
+                cocktail.strIngredient12 = drinkDetails.strIngredient12;
+                cocktail.strIngredient13 = drinkDetails.strIngredient13;
+                cocktail.strIngredient14 = drinkDetails.strIngredient14;
+                cocktail.strIngredient15 = drinkDetails.strIngredient15;
 
-                if (d.strIngredient2 != null)
-                    c.Ingredients.Add(d.strIngredient2);
-
-                if (d.strIngredient3 != null)
-                    c.Ingredients.Add(d.strIngredient3);
-
-                if (d.strIngredient4 != null)
-                    c.Ingredients.Add(d.strIngredient4);
-
-                if (d.strIngredient5 != null)
-                    c.Ingredients.Add(d.strIngredient5);
-
-                if (d.strIngredient6 != null)
-                    c.Ingredients.Add(d.strIngredient6);
-
-                if (d.strIngredient7 != null)
-                    c.Ingredients.Add(d.strIngredient7);
-
-                if (d.strIngredient8 != null)
-                    c.Ingredients.Add(d.strIngredient8);
-
-                if (d.strIngredient9 != null)
-                    c.Ingredients.Add(d.strIngredient9);
-
-                if (d.strIngredient10 != null)
-                    c.Ingredients.Add(d.strIngredient10);
-
-                if (d.strIngredient11 != null)
-                    c.Ingredients.Add(d.strIngredient11);
-
-                if (d.strIngredient12 != null)
-                    c.Ingredients.Add(d.strIngredient12);
-
-                if (d.strIngredient13 != null)
-                    c.Ingredients.Add(d.strIngredient13);
-
-                if (d.strIngredient14 != null)
-                    c.Ingredients.Add(d.strIngredient14);
-
-                if (d.strIngredient15 != null)
-                    c.Ingredients.Add(d.strIngredient15);
-
-                c.Instructions = d.strInstructions;
-                cocktailList.Cocktails.Add(c);
+                cocktail.Instructions = drinkDetails.strInstructions;
+                cocktailList.Cocktails.Add(cocktail);
             }
             
             var radom = new Random();

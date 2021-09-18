@@ -8,8 +8,8 @@ namespace api.Connector
 {
     interface ICocktailConnector
     {
-        public Task<Drinks> GetCocktailIDsByIngredient(string ingredient);
-        public Task<DrinkDetails> GetCocktailByID(int id);
-        public Task<DrinksRandom> GetRandomCocktail();
+        public Drinks GetCocktailIDsByIngredient(string ingredient);
+        public DrinkDetails GetCocktailByID(int id);
+        public DrinksRandom GetRandomCocktail();
     }
 }

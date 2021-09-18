@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net;
+using System.IO;
 
 namespace api.Connector
 {
@@ -14,30 +16,35 @@ namespace api.Connector
     {
         HttpClient httpClient = new HttpClient();
         
-        public  Task<DrinkDetails> GetCocktailByID(int id)
+        public  DrinkDetails GetCocktailByID(int id)
         {
-
             var urlPath = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + id.ToString();
-            var  httpResponse =  httpClient.GetAsync(urlPath);
-            var dls= httpResponse.Result.Content.ReadAsAsync<DrinkDetails>();
-            return dls;
-         
+            return getData<DrinkDetails>(urlPath);
         }
 
-        public Task<Drinks> GetCocktailIDsByIngredient(string ingredient)
+        public Drinks GetCocktailIDsByIngredient(string ingredient)
         {
-           var  urlPath = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + ingredient;
-            var httpResponse = httpClient.GetAsync(urlPath);
-            return httpResponse.Result.Content.ReadAsAsync<Drinks>();
+            var  urlPath = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + ingredient;
+            return getData<Drinks>(urlPath);
         }
 
-        public Task<DrinksRandom> GetRandomCocktail()
+        public DrinksRandom GetRandomCocktail()
         {
-           
             var urlPath = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
-            var httpResponse = httpClient.GetAsync(urlPath);
-           var rc =  httpResponse.Result.Content.ReadAsAsync<DrinksRandom>();
-            return rc;
+            return getData<DrinksRandom>(urlPath);
+        }
+
+        private T getData<T>  (string url )
+        {
+            HttpWebRequest request = WebRequest.CreateHttp(url);
+            request.Method = "GET";
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+
+            StreamReader myStreamReader = new StreamReader(responseStream, Encoding.UTF8);
+            string responseJSON = myStreamReader.ReadToEnd();
+
+            return JsonConvert.DeserializeObject<T>(responseJSON);
         }
     }
 }
