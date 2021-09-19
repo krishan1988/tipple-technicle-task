@@ -34,13 +34,40 @@ namespace api.Services
                 return null;
             }
 
+            
+            var tasks = new List<Task<DrinkDetails>>();
+
+            Func<object, DrinkDetails> action = (object obj) =>
+             {
+                 int id = (int)obj;
+                 return connector.GetCocktailByID(id);
+             };
+
             foreach (var drink in drinks.drinks) {
                 var id = Int32.Parse(drink.idDrink);
-                var cocktail = connector.GetCocktailByID(id);
-                foreach (var drinkDetail in cocktail.drinks) {
-                    cocktailList.Cocktails.Add(getCocktail(drinkDetail));
-                }  
+                tasks.Add(Task<DrinkDetails>.Factory.StartNew(action,id));
             }
+
+            // Wait until all task.
+            Task.WaitAll(tasks.ToArray());
+
+            foreach (var task in tasks)
+            {
+                foreach (var drinkDetail in task.Result.drinks)
+                {
+                    cocktailList.Cocktails.Add(getCocktail(drinkDetail));
+                }
+            }
+
+
+            // Sequential code
+            //foreach (var drink in drinks.drinks) {
+            //    var id = Int32.Parse(drink.idDrink);
+            //    var cocktail = connector.GetCocktailByID(id);
+            //    foreach (var drinkDetail in cocktail.drinks) {
+            //        cocktailList.Cocktails.Add(getCocktail(drinkDetail));
+            //    }  
+            //}
 
             return cocktailList;
         }
