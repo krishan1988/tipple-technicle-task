@@ -1,4 +1,4 @@
-﻿using api.Models.Response;
+﻿using api.Models.Response.Outgoing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace api.Connector
 {
     public class CocktailConnector : ICocktailConnector
     {
-        HttpClient httpClient = new HttpClient();
+        private HttpClient httpClient = new HttpClient();
         
         public  DrinkDetails GetCocktailByID(int id)
         {
@@ -28,10 +28,10 @@ namespace api.Connector
             return getData<Drinks>(urlPath);
         }
 
-        public DrinksRandom GetRandomCocktail()
+        public DrinkDetails GetRandomCocktail()
         {
             var urlPath = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
-            return getData<DrinksRandom>(urlPath);
+            return getData<DrinkDetails>(urlPath);
         }
 
         private T getData<T>  (string url )

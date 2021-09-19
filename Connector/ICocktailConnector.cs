@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using api.Models.Response;
+using api.Models.Response.Outgoing;
 
 namespace api.Connector
 {
@@ -10,6 +10,6 @@ namespace api.Connector
     {
         public Drinks GetCocktailIDsByIngredient(string ingredient);
         public DrinkDetails GetCocktailByID(int id);
-        public DrinksRandom GetRandomCocktail();
+        public DrinkDetails GetRandomCocktail();
     }
 }

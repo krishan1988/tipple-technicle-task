@@ -6,7 +6,7 @@ using api.Models.Response;
 
 namespace api.Services
 {
-    interface ICocktailService
+    public interface ICocktailService
     {
         public CocktailList GetCocktailListByIngredient(string ingredient);
         public Cocktail GetRandomCocktaill();

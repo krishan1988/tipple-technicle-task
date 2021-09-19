@@ -1,4 +1,4 @@
-﻿using api.Models.Response;
+﻿using api.Models.Response.Outgoing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,18 +40,18 @@ namespace api.Connector
             return drinkList;
         }
 
-        public DrinksRandom GetRandomCocktail()
+        public DrinkDetails GetRandomCocktail()
         {
-            var drinksRandom = new DrinksRandom();
-            drinksRandom.drinks = new List<DrinkRandom>();
-            var drinkRandom = new DrinkRandom();
+            var drinkDetail = new DrinkDetails();
+            drinkDetail.drinks = new List<DrinkDetail>();
+            var drinkRandom = new DrinkDetail();
 
             drinkRandom.idDrink = "11476";
             drinkRandom.strDrink = "Highland Fling Cocktail";
             drinkRandom.strCategory = "Ordinary Drink";
 
-            drinksRandom.drinks.Add(drinkRandom);
-            return drinksRandom;
+            drinkDetail.drinks.Add(drinkRandom);
+            return drinkDetail;
         
         }
     }
